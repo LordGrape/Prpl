@@ -1,0 +1,62 @@
+-- Library Sections
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Hero Simulator", "GrapeTheme")
+
+-- Library Sections
+local Tab = Window:NewTab("Auto Chests + Drops")
+local Chest = Tab:NewSection("Chests + Drops")
+getgenv().AutoChest = false
+getgenv().AutoDrops = false
+
+
+
+Chest:NewToggle("Collect Chests", "Automatically Collect Chests", function(bool)
+    getgenv().AutoChest = bool
+    if AutoChest == true then
+        CHESTS()
+    end
+end)
+
+Chest:NewToggle("Auto Drops", "Automatically Collect Drops", function(bool)
+    getgenv().AutoDrops = bool
+    if AutoDrops == true then
+        DROPS()
+    end
+end)
+
+
+
+
+
+function CHESTS()
+    spawn(function()
+        while wait() do
+        if AutoChest == true then
+            local chestss = game:GetService("Workspace").Chests:GetDescendants()
+            for i,v in pairs(chestss) do
+                if v.ClassName == "Part" and v.Name == "Main" then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.Position + Vector3.new(0,0,0))
+                    wait()
+                end
+            end
+        end
+    end
+    end)
+end
+
+function DROPS()
+    spawn(function()
+        while wait() do
+        if AutoDrops == true then
+            local Drops = game:GetService("Workspace").Drops:GetDescendants()
+            for i,v in pairs(Drops) do
+                if v.ClassName == "Part" and v.Name == "Center" then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(v.Position + Vector3.new(0,0,0))
+                    wait()
+                end
+            end
+        end
+    end
+    end)
+end
